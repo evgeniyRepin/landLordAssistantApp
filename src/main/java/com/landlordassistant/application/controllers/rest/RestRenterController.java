@@ -20,33 +20,36 @@ public class RestRenterController {
     @GetMapping
     public List<Renter> getAllRenter() {
         List<Renter> renters = renterService.getAllRenters();
-
         return renters;
     }
 
     @GetMapping("/{id}")
-    private Renter getRenter(@PathVariable long id) {
+    public Renter getRenter(@PathVariable long id) {
         Renter renter = renterService.getRenter(id);
         return renter;
     }
 
 
     @PostMapping
-    private Renter addNewRenter(@RequestBody Renter renter) {
+    public Renter addNewRenter(@RequestBody Renter renter) {
         renterService.saveRenter(renter);
         return renter;
     }
 
     @PutMapping
-    private Renter updateRenter(@RequestBody Renter renter) {
+    public Renter updateRenter(@RequestBody Renter renter) {
         renterService.saveRenter(renter);
         return renter;
     }
 
     @DeleteMapping("/{id}")
-    private Renter deleteRenter(@PathVariable long id) {
+    public Renter deleteRenter(@PathVariable long id) {
         Renter renter = renterService.getRenter(id);
         renterService.deleteRenter(id);
         return renter;
+    }
+
+    public String welcome() {
+        return "Welcome";
     }
 }
