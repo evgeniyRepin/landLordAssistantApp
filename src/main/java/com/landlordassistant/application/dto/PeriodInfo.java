@@ -5,7 +5,7 @@ import java.math.BigDecimal;
 import java.time.LocalDate;
 import java.util.List;
 
-public class PeriodDto {
+public class PeriodInfo {
 
     long id;
 
@@ -21,7 +21,7 @@ public class PeriodDto {
 
     private List<Long> renters;
 
-    public PeriodDto(long id, LocalDate startDate, BigDecimal startColdWater, BigDecimal startHotWater, BigDecimal startElectricity, LocalDate endDate, BigDecimal endColdWater, BigDecimal endHotWater, BigDecimal endElectricity, List<Long> renters) {
+    public PeriodInfo(long id, LocalDate startDate, BigDecimal startColdWater, BigDecimal startHotWater, BigDecimal startElectricity, LocalDate endDate, BigDecimal endColdWater, BigDecimal endHotWater, BigDecimal endElectricity, List<Long> renters) {
         this.id = id;
         this.startDate = startDate;
         this.startColdWater = startColdWater;

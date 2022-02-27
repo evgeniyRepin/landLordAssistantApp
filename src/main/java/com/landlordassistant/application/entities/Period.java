@@ -1,6 +1,6 @@
 package com.landlordassistant.application.entities;
 
-import com.landlordassistant.application.dto.PeriodDto;
+import com.landlordassistant.application.dto.PeriodInfo;
 
 import javax.validation.constraints.NotNull;
 
@@ -108,19 +108,19 @@ public class Period {
     public Period() {
     }
 
-    public Period(PeriodDto periodDto) {
+    public Period(PeriodInfo periodInfo) {
 
-        this.id = periodDto.getId();
+        this.id = periodInfo.getId();
 
-        this.startDate = periodDto.getStartDate();
-        this.startColdWater = periodDto.getStartColdWater();
-        this.startHotWater = periodDto.getStartHotWater();
-        this.startElectricity = periodDto.getStartElectricity();
+        this.startDate = periodInfo.getStartDate();
+        this.startColdWater = periodInfo.getStartColdWater();
+        this.startHotWater = periodInfo.getStartHotWater();
+        this.startElectricity = periodInfo.getStartElectricity();
 
-        this.endDate = periodDto.getEndDate();
-        this.endColdWater = periodDto.getEndColdWater();
-        this.endHotWater = periodDto.getEndHotWater();
-        this.endElectricity = periodDto.getEndElectricity();
+        this.endDate = periodInfo.getEndDate();
+        this.endColdWater = periodInfo.getEndColdWater();
+        this.endHotWater = periodInfo.getEndHotWater();
+        this.endElectricity = periodInfo.getEndElectricity();
 
         resultColdWater = endColdWater.subtract(startColdWater);
         resultHotWater = endHotWater.subtract(startHotWater);

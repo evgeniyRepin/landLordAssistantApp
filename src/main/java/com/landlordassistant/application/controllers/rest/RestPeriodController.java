@@ -1,14 +1,13 @@
 package com.landlordassistant.application.controllers.rest;
 
-import com.landlordassistant.application.dto.PeriodDto;
+import com.landlordassistant.application.dto.PeriodInfo;
+import com.landlordassistant.application.dto.ResponseDto;
 import com.landlordassistant.application.dto.SeveralPeriodsCalculationResult;
 import com.landlordassistant.application.entities.Period;
 import com.landlordassistant.application.services.PeriodService;
-import com.landlordassistant.application.services.RenterService;
 import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
-import java.util.Optional;
 
 @RestController
 @RequestMapping("/api/periods")
@@ -21,46 +20,45 @@ public class RestPeriodController {
     }
 
     @GetMapping
-    public List<Period> getAllPeriods() {
+    public ResponseDto<List<Period>> getAllPeriods() {
         List<Period> periods = periodService.getAllPeriods();
-
-        return periods;
+        return ResponseDto.success(periods);
     }
 
     @GetMapping("/{id}")
-    public Period getPeriod(@PathVariable long id) {
+    public ResponseDto<Period> getPeriod(@PathVariable long id) {
         Period period = periodService.getPeriod(id);
-        return period;
+        return ResponseDto.success(period);
     }
 
     @PostMapping
     @ResponseBody
 //    Стоит ли принимать новый период с коллекцией id рентеров или лучше принимать коллекцию самих рентеров?
-    public Period addNewPeriod(@RequestBody PeriodDto periodDto) {
-        Period period = new Period(periodDto);
-        periodService.savePeriod(period, periodDto.getRenters());
-        return period;
+    public ResponseDto<Void> addNewPeriod(@RequestBody PeriodInfo periodInfo) {
+        Period period = new Period(periodInfo);
+        periodService.savePeriod(period, periodInfo.getRenters());
+        return ResponseDto.success();
     }
 
     @PutMapping
-    public Period updatePeriod(@RequestBody PeriodDto periodDto) {
-        Period period = new Period(periodDto);
-        periodService.savePeriod(period, periodDto.getRenters());
-        return period;
+    public ResponseDto<Void> updatePeriod(@RequestBody PeriodInfo periodInfo) {
+        Period period = new Period(periodInfo);
+        periodService.savePeriod(period, periodInfo.getRenters());
+        return ResponseDto.success();
     }
 
     @DeleteMapping("/{id}")
-    public Period deletePeriod(@PathVariable long id) {
+    public ResponseDto<Void> deletePeriod(@PathVariable long id) {
         Period period = periodService.getPeriod(id);
         periodService.deletePeriod(id);
-        return period;
+        return ResponseDto.success();
     }
 
     @GetMapping("/calculate")
     @ResponseBody
-    public SeveralPeriodsCalculationResult calculatePeriods(@RequestParam("id") long[] periodsIds) {
+    public ResponseDto<SeveralPeriodsCalculationResult> calculatePeriods(@RequestParam("id") long[] periodsIds) {
         SeveralPeriodsCalculationResult result =
                 periodService.calculatePeriods(periodsIds);
-        return result;
+        return ResponseDto.success(result);
     }
 }
