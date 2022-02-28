@@ -4,9 +4,12 @@ target/
 !**/src/main/**/target/
 !**/src/test/**/target/
 
+src/main/java/com/landlordassistant/application/configuration
+
 node
 node_modules
 
+.env
 ### STS ###
 .apt_generated
 .classpath

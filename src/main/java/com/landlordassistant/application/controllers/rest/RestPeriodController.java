@@ -1,9 +1,9 @@
 package com.landlordassistant.application.controllers.rest;
 
+import com.landlordassistant.application.api.CreatePeriodInfo;
 import com.landlordassistant.application.api.PeriodInfo;
+import com.landlordassistant.application.api.SeveralPeriodsCalculationResultInfo;
 import com.landlordassistant.application.dto.ResponseDto;
-import com.landlordassistant.application.services.SeveralPeriodsCalculationResult;
-import com.landlordassistant.application.entities.Period;
 import com.landlordassistant.application.services.PeriodService;
 import org.springframework.web.bind.annotation.*;
 
@@ -12,53 +12,47 @@ import java.util.List;
 @RestController
 @RequestMapping("/api/periods")
 public class RestPeriodController {
-
     private final PeriodService periodService;
 
     public RestPeriodController(PeriodService periodService) {
         this.periodService = periodService;
     }
 
+    @GetMapping("/{id}")
+    public ResponseDto<PeriodInfo> getPeriod(@PathVariable long id) {
+        PeriodInfo periodInfo = periodService.getPeriodInfo(id);
+        return ResponseDto.success(periodInfo);
+    }
+
     @GetMapping
-    public ResponseDto<List<Period>> getAllPeriods() {
-        List<Period> periods = periodService.getAllPeriods();
+    public ResponseDto<List<PeriodInfo>> getAllPeriods() {
+        List<PeriodInfo> periods = periodService.getAllPeriodsInfo();
         return ResponseDto.success(periods);
     }
 
-    @GetMapping("/{id}")
-    public ResponseDto<Period> getPeriod(@PathVariable long id) {
-        Period period = periodService.getPeriod(id);
-        return ResponseDto.success(period);
-    }
-
     @PostMapping
-    @ResponseBody
-//    Стоит ли принимать новый период с коллекцией id рентеров или лучше принимать коллекцию самих рентеров?
-    public ResponseDto<Void> addNewPeriod(@RequestBody PeriodInfo periodInfo) {
-        Period period = new Period(periodInfo);
-        periodService.savePeriod(period, periodInfo.getRenters());
+    public ResponseDto<Void> addNewPeriodInfo(@RequestBody CreatePeriodInfo createPeriodInfo) {
+        periodService.savePeriodInfo(createPeriodInfo);
         return ResponseDto.success();
     }
 
     @PutMapping
-    public ResponseDto<Void> updatePeriod(@RequestBody PeriodInfo periodInfo) {
-        Period period = new Period(periodInfo);
-        periodService.savePeriod(period, periodInfo.getRenters());
+    public ResponseDto<Void> updatePeriodInfo(@RequestBody CreatePeriodInfo createPeriodInfo) {
+        periodService.savePeriodInfo(createPeriodInfo);
         return ResponseDto.success();
     }
 
     @DeleteMapping("/{id}")
     public ResponseDto<Void> deletePeriod(@PathVariable long id) {
-        Period period = periodService.getPeriod(id);
-        periodService.deletePeriod(id);
+        periodService.deletePeriodInfo(id);
         return ResponseDto.success();
     }
 
     @GetMapping("/calculate")
     @ResponseBody
-    public ResponseDto<SeveralPeriodsCalculationResult> calculatePeriods(@RequestParam("id") long[] periodsIds) {
-        SeveralPeriodsCalculationResult result =
-                periodService.calculatePeriods(periodsIds);
+    public ResponseDto<SeveralPeriodsCalculationResultInfo> calculatePeriods(@RequestParam("id") long[] periodsIds) {
+        SeveralPeriodsCalculationResultInfo result =
+                periodService.calculatePeriodsInfo(periodsIds);
         return ResponseDto.success(result);
     }
 }

@@ -1,5 +1,6 @@
 package com.landlordassistant.application.services;
 
+import com.landlordassistant.application.api.RenterInfo;
 import com.landlordassistant.application.exceptionHandling.NoSuchRenterException;
 import com.landlordassistant.application.entities.Renter;
 import com.landlordassistant.application.repositories.RenterRepository;
@@ -18,26 +19,31 @@ public class RenterServiceImplementation implements RenterService{
     }
 
     @Override
-    public List<Renter> getAllRenters() {
-        return renterRepository.findAll();
-    }
-
-    @Override
-    public void saveRenter(Renter renter) {
-        renterRepository.save(renter);
-    }
-
-    @Override
-    public Renter getRenter(long renterID) {
+    public RenterInfo getRenterInfo(long renterID) {
         Renter renter = renterRepository
                 .findById(renterID)
-                .orElseThrow(() -> new NoSuchRenterException("There is no such renter with id= " + renterID));
+                .orElseThrow(() -> new NoSuchRenterException("There is no such renter with id=" + renterID));
 
-            return renter;
+        return new RenterInfo(renter);
     }
 
     @Override
-    public void deleteRenter(long renterID) {
-            renterRepository.deleteById(renterID);
+    public List<RenterInfo> getAllRentersInfo() {
+        List<RenterInfo> renterInfoList =
+                renterRepository.findAll().stream()
+                        .map(renter -> new RenterInfo(renter))
+                        .toList();
+        return renterInfoList;
+    }
+
+    @Override
+    public void saveRenterInfo(RenterInfo renterInfo) {
+        renterRepository.save(new Renter(renterInfo));
+    }
+
+    @Override
+    public void deleteRenterInfo(long renterID) {
+        getRenterInfo(renterID);
+        renterRepository.deleteById(renterID);
     }
 }

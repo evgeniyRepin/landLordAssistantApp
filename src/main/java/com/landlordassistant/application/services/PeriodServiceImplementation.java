@@ -1,5 +1,8 @@
 package com.landlordassistant.application.services;
 
+import com.landlordassistant.application.api.CreatePeriodInfo;
+import com.landlordassistant.application.api.PeriodInfo;
+import com.landlordassistant.application.api.SeveralPeriodsCalculationResultInfo;
 import com.landlordassistant.application.entities.Tariff;
 import com.landlordassistant.application.exceptionHandling.NoSuchPeriodException;
 import com.landlordassistant.application.entities.Period;
@@ -7,6 +10,7 @@ import com.landlordassistant.application.entities.Renter;
 import com.landlordassistant.application.repositories.PeriodRepository;
 import org.springframework.stereotype.Service;
 
+import java.util.Arrays;
 import java.util.List;
 
 @Service
@@ -25,50 +29,52 @@ public class PeriodServiceImplementation implements PeriodService {
     }
 
     @Override
-    public Period getPeriod(long id) {
+    public PeriodInfo getPeriodInfo(long id) {
+        Period period = getPeriod(id);
+        return new PeriodInfo(period);
+    }
+
+    private Period getPeriod(long id) {
         Period period = periodRepository
                 .findById(id)
-                .orElseThrow(() -> new NoSuchPeriodException("There is no period with id = " + id));
+                .orElseThrow(() -> new NoSuchPeriodException("There is no period with id=" + id));
         return period;
     }
 
     @Override
-    public void savePeriod(Period period) {
-        periodRepository.save(period);
+    public List<PeriodInfo> getAllPeriodsInfo() {
+        List<PeriodInfo> periodInfoList = periodRepository.findAll().stream()
+                .map(PeriodInfo::new)
+                .toList();
+        return periodInfoList;
     }
 
     @Override
-    public void savePeriod(Period period, List<Long> renters) {
-        for (Long id : renters) {
-            Renter renter = renterService.getRenter(id);
+    public void savePeriodInfo(CreatePeriodInfo createPeriodInfo) {
+        Period period = new Period(createPeriodInfo);
+        for (Long id : createPeriodInfo.getRenters()) {
+            Renter renter = new Renter(renterService.getRenterInfo(id));
             period.getRenters().add(renter);
         }
         periodRepository.save(period);
     }
 
     @Override
-    public List<Period> getAllPeriods() {
-        return periodRepository.findAll();
-    }
-
-    @Override
-    public void deletePeriod(long id) {
+    public void deletePeriodInfo(long id) {
+        getPeriodInfo(id);
         periodRepository.deleteById(id);
     }
 
     @Override
-    public SeveralPeriodsCalculationResult calculatePeriods(long[] periodIds) {
+    public SeveralPeriodsCalculationResultInfo calculatePeriodsInfo(long[] periodIds) {
         Tariff tariff = tariffService.getTariff(1);
-        Period[] periods = new Period[periodIds.length];
-
-        for (int i = 0; i < periodIds.length; i++) {
-            Period period = getPeriod(periodIds[i]);
-            periods[i] = period;
-        }
+        List<Period> periods = Arrays.stream(periodIds)
+                .mapToObj(this::getPeriod)
+                .toList();
 
         SeveralPeriodsCalculationResult severalPeriodsCalculationResult = new SeveralPeriodsCalculationResult();
         severalPeriodsCalculationResult.calculatePeriods(periods, tariff);
 
-        return severalPeriodsCalculationResult;
+        return new SeveralPeriodsCalculationResultInfo(severalPeriodsCalculationResult);
     }
 }

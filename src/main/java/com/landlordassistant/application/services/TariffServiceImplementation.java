@@ -5,8 +5,6 @@ import com.landlordassistant.application.exceptionHandling.NoSuchEntityException
 import com.landlordassistant.application.repositories.TariffRepository;
 import org.springframework.stereotype.Service;
 
-import java.util.Optional;
-
 @Service
 public class TariffServiceImplementation implements TariffService {
 

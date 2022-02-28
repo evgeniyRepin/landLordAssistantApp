@@ -1,16 +1,12 @@
-package com.landlordassistant.application.services;
+package com.landlordassistant.application.api;
 
-import com.landlordassistant.application.entities.Period;
 import com.landlordassistant.application.entities.Renter;
-import com.landlordassistant.application.entities.Tariff;
+import com.landlordassistant.application.services.SeveralPeriodsCalculationResult;
 
 import java.math.BigDecimal;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
-public class SeveralPeriodsCalculationResult {
+public class SeveralPeriodsCalculationResultInfo {
     private BigDecimal coldWaterAmount;
     private BigDecimal hotWaterAmount;
     private BigDecimal electricityAmount;
@@ -25,53 +21,17 @@ public class SeveralPeriodsCalculationResult {
 
     private Map<Renter, BigDecimal> rentersBill;
 
-    {
-        coldWaterAmount = new BigDecimal(0);
-        hotWaterAmount = new BigDecimal(0);
-        electricityAmount = new BigDecimal(0);
-        canalizationAmount = new BigDecimal(0);
+    public SeveralPeriodsCalculationResultInfo(SeveralPeriodsCalculationResult result) {
+        coldWaterAmount = result.getColdWaterAmount();
+        hotWaterAmount = result.getHotWaterAmount();
+        electricityAmount = result.getElectricityAmount();
+        canalizationAmount = result.getCanalizationAmount();
 
-        coldWaterBill = new BigDecimal(0);
-        hotWaterBill = new BigDecimal(0);
-        electricityBill = new BigDecimal(0);
-        canalizationBill = new BigDecimal(0);
-
-        totalBill = new BigDecimal(0);
-
-        rentersBill = new HashMap<>();
-    }
-
-
-    public void calculatePeriods(List<Period> periods, Tariff tariff) {
-
-        List<OnePeriodCalculationResult> OnePeriodResultList = new ArrayList<>();
-
-        for (Period period : periods) {
-            coldWaterAmount = coldWaterAmount.add(period.getResultColdWater());
-            hotWaterAmount = hotWaterAmount.add(period.getResultHotWater());
-            electricityAmount = electricityAmount.add(period.getResultElectricity());
-            canalizationAmount = canalizationAmount.add(period.getResultCanalization());
-            addOnePeriodBills(new OnePeriodCalculationResult(period, tariff));
-        }
-    }
-
-    private void addOnePeriodBills(OnePeriodCalculationResult period) {
-        this.coldWaterBill = this.coldWaterBill.add(period.getColdWaterBill());
-        this.hotWaterBill = this.hotWaterBill.add(period.getHotWaterBill());
-        this.electricityBill = this.electricityBill.add(period.getElectricityBill());
-        this.canalizationBill = this.canalizationBill.add(period.getCanalizationBill());
-        this.totalBill = this.totalBill.add(period.getTotalBill());
-
-//        TODO rewrite more elegantly
-        for (Map.Entry<Renter, BigDecimal> pair : period.getBillsPerRenterMap().entrySet()) {
-            if (rentersBill.containsKey(pair.getKey())) {
-                BigDecimal oldValue = rentersBill.get(pair.getKey());
-                BigDecimal newValue = oldValue.add(pair.getValue());
-                rentersBill.put(pair.getKey(), newValue);
-            } else {
-                rentersBill.put(pair.getKey(), pair.getValue());
-            }
-        }
+        coldWaterBill = result.getColdWaterBill();
+        hotWaterBill = result.getHotWaterBill();
+        electricityBill = result.getElectricityBill();
+        canalizationBill = result.getCanalizationBill();
+        rentersBill = result.getRentersBill();
     }
 
     public BigDecimal getColdWaterAmount() {

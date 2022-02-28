@@ -1,5 +1,6 @@
 package com.landlordassistant.application.entities;
 
+import com.landlordassistant.application.api.RenterInfo;
 import com.landlordassistant.application.constants.Gender;
 
 import javax.persistence.*;
@@ -44,6 +45,14 @@ public class Renter {
         this.surname = surname;
         this.gender = gender;
         this.startRenting = startRenting;
+    }
+    public Renter(RenterInfo renterInfo) {
+        id = renterInfo.getId();
+        name = renterInfo.getName();
+        middleName = renterInfo.getMiddleName();
+        surname = renterInfo.getSurname();
+        gender = renterInfo.getGender();
+        startRenting = renterInfo.getStartRenting();
     }
 
     @Override

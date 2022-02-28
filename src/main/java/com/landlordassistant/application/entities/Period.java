@@ -1,10 +1,8 @@
 package com.landlordassistant.application.entities;
 
-import com.landlordassistant.application.api.PeriodInfo;
+import com.landlordassistant.application.api.CreatePeriodInfo;
 
 import javax.validation.constraints.NotNull;
-
-
 import javax.persistence.*;
 import java.math.BigDecimal;
 import java.time.LocalDate;
@@ -108,19 +106,19 @@ public class Period {
     public Period() {
     }
 
-    public Period(PeriodInfo periodInfo) {
+    public Period(CreatePeriodInfo createPeriodInfo) {
 
-        this.id = periodInfo.getId();
+        this.id = createPeriodInfo.getId();
 
-        this.startDate = periodInfo.getStartDate();
-        this.startColdWater = periodInfo.getStartColdWater();
-        this.startHotWater = periodInfo.getStartHotWater();
-        this.startElectricity = periodInfo.getStartElectricity();
+        this.startDate = createPeriodInfo.getStartDate();
+        this.startColdWater = createPeriodInfo.getStartColdWater();
+        this.startHotWater = createPeriodInfo.getStartHotWater();
+        this.startElectricity = createPeriodInfo.getStartElectricity();
 
-        this.endDate = periodInfo.getEndDate();
-        this.endColdWater = periodInfo.getEndColdWater();
-        this.endHotWater = periodInfo.getEndHotWater();
-        this.endElectricity = periodInfo.getEndElectricity();
+        this.endDate = createPeriodInfo.getEndDate();
+        this.endColdWater = createPeriodInfo.getEndColdWater();
+        this.endHotWater = createPeriodInfo.getEndHotWater();
+        this.endElectricity = createPeriodInfo.getEndElectricity();
 
         resultColdWater = endColdWater.subtract(startColdWater);
         resultHotWater = endHotWater.subtract(startHotWater);
@@ -129,7 +127,6 @@ public class Period {
 
         renters = new ArrayList<>();
     }
-
 
 
     public long getId() {
