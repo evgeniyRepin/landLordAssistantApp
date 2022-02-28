@@ -1,16 +1,13 @@
 package com.landlordassistant.application.services;
 
-import com.landlordassistant.application.dto.SeveralPeriodsCalculationResult;
 import com.landlordassistant.application.entities.Tariff;
 import com.landlordassistant.application.exceptionHandling.NoSuchPeriodException;
 import com.landlordassistant.application.entities.Period;
 import com.landlordassistant.application.entities.Renter;
 import com.landlordassistant.application.repositories.PeriodRepository;
-import com.landlordassistant.application.repositories.TariffRepository;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
-import java.util.Optional;
 
 @Service
 public class PeriodServiceImplementation implements PeriodService {

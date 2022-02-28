@@ -1,4 +1,4 @@
-package com.landlordassistant.application.dto;
+package com.landlordassistant.application.api;
 
 
 import java.math.BigDecimal;

@@ -1,7 +1,6 @@
 package com.landlordassistant.application.services;
 
 
-import com.landlordassistant.application.dto.SeveralPeriodsCalculationResult;
 import com.landlordassistant.application.entities.Period;
 
 import java.util.List;

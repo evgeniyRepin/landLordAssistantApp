@@ -1,4 +1,4 @@
-package com.landlordassistant.application.dto;
+package com.landlordassistant.application.services;
 
 import com.landlordassistant.application.entities.Period;
 import com.landlordassistant.application.entities.Renter;

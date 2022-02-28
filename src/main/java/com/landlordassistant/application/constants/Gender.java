@@ -1,4 +1,4 @@
-package com.landlordassistant.application.embedded;
+package com.landlordassistant.application.constants;
 
 public enum Gender {
     MALE,

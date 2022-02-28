@@ -1,18 +1,15 @@
 package com.landlordassistant.application.controllers.rest;
 
-import com.landlordassistant.application.embedded.Gender;
+import com.landlordassistant.application.constants.Gender;
 import com.landlordassistant.application.entities.Renter;
-import com.landlordassistant.application.services.RenterService;
 import com.landlordassistant.application.services.RenterServiceImplementation;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.boot.test.autoconfigure.web.servlet.WebMvcTest;
-import org.springframework.boot.test.context.SpringBootTest;
 import org.springframework.boot.test.mock.mockito.MockBean;
 import org.springframework.http.MediaType;
 import org.springframework.test.context.junit.jupiter.SpringExtension;
-import org.springframework.test.context.junit4.SpringRunner;
 import org.springframework.test.web.servlet.MockMvc;
 
 import java.time.LocalDate;

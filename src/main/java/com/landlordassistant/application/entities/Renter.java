@@ -1,6 +1,6 @@
 package com.landlordassistant.application.entities;
 
-import com.landlordassistant.application.embedded.Gender;
+import com.landlordassistant.application.constants.Gender;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;

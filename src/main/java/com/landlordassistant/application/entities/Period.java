@@ -1,6 +1,6 @@
 package com.landlordassistant.application.entities;
 
-import com.landlordassistant.application.dto.PeriodInfo;
+import com.landlordassistant.application.api.PeriodInfo;
 
 import javax.validation.constraints.NotNull;
 

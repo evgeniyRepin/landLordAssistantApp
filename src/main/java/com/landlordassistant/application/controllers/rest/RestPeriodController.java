@@ -1,8 +1,8 @@
 package com.landlordassistant.application.controllers.rest;
 
-import com.landlordassistant.application.dto.PeriodInfo;
+import com.landlordassistant.application.api.PeriodInfo;
 import com.landlordassistant.application.dto.ResponseDto;
-import com.landlordassistant.application.dto.SeveralPeriodsCalculationResult;
+import com.landlordassistant.application.services.SeveralPeriodsCalculationResult;
 import com.landlordassistant.application.entities.Period;
 import com.landlordassistant.application.services.PeriodService;
 import org.springframework.web.bind.annotation.*;

@@ -1,4 +1,4 @@
-package com.landlordassistant.application.infrastructure.web;
+package com.landlordassistant.application.configuration.web;
 
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
